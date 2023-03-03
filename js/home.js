@@ -4,11 +4,12 @@ function cl(anything) {
 }
 
 showAllFlag = false;
+isSorted = false;
 
 // fetch the whole list
 fetch("https://openapi.programming-hero.com/api/ai/tools")
   .then((res) => res.json())
-  .then((data) => displayAiCards(data))
+  .then((data) => displayAiCards(data.data.tools))
   .catch((error) => console.log(error));
 
 // extract features and make list
@@ -16,25 +17,6 @@ function extractFeList(card) {
   return card.features.reduce((previous, current) => {
     return previous + "<li>" + current + "</li>";
   }, "");
-}
-
-// show all data toggle
-function showAll() {
-  // start spinner or loader
-  toggleSpinner(true);
-
-  //set the flag
-  showAllFlag = true;
-
-  // fetch the whole list and display all Ai cards
-  fetch("https://openapi.programming-hero.com/api/ai/tools")
-    .then((res) => res.json())
-    .then((data) => displayAiCards(data))
-    .catch((error) => console.log(error));
-
-  //removing the button
-  showBtn = document.getElementById("show-all-sec");
-  showBtn.classList.add("d-none");
 }
 
 // display card data
@@ -48,9 +30,9 @@ const displayAiCards = (data) => {
 
   //display 6 cards
   if (showAllFlag) {
-    cards = data.data.tools;
-  } else {
-    cards = data.data.tools.slice(0, 6);
+    cards = data;
+  } else{
+    cards = data.slice(0, 6);
   }
 
   cards.forEach((card) => {
@@ -93,3 +75,41 @@ const toggleSpinner = (isLoading) => {
     loaderSection.classList.add("d-none");
   }
 };
+
+// show all data toggle
+function showAll() {
+  // start spinner or loader
+  toggleSpinner(true);
+
+  //set the flag
+  showAllFlag = true;
+
+  if(isSorted)
+  {
+    sortByDate();
+  }
+  else{
+      // fetch the whole list and display all Ai cards
+      fetch("https://openapi.programming-hero.com/api/ai/tools")
+        .then((res) => res.json())
+        .then((data) => displayAiCards(data.data.tools))
+        .catch((error) => console.log(error));
+  }
+
+  //removing the button
+  showBtn = document.getElementById("show-all-sec");
+  showBtn.classList.add("d-none");
+}
+
+
+// sort the data by date created
+function sortByDate() {
+  // set tht flag
+  isSorted = true;
+  document.getElementById("btnSort").disabled = true;
+  // fetch the whole list
+  fetch("https://openapi.programming-hero.com/api/ai/tools")
+    .then((res) => res.json())
+    .then((data) => displayAiCards(data.data.tools.sort((c1,c2)=>(Date.parse(c1.published_in) < Date.parse(c2.published_in)) ? 1 : (Date.parse(c1.published_in) > Date.parse(c2.published_in)) ? -1 : 0)))
+    .catch((error) => console.log(error));
+}
