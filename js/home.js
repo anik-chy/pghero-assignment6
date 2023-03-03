@@ -39,7 +39,7 @@ const displayAiCards = (data) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("col");
     featureStr = extractFeList(card);
-    //cl(featureStr);
+    
     cardDiv.innerHTML = `
         <div class="card h-100">
             <img src="${card.image}" class="card-img-top h-50">
