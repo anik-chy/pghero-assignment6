@@ -2,6 +2,7 @@
 function cl(anything) {
   console.log(anything);
 }
+
 // fetch the whole list
 fetch("https://openapi.programming-hero.com/api/ai/tools")
   .then((res) => res.json())
@@ -9,21 +10,38 @@ fetch("https://openapi.programming-hero.com/api/ai/tools")
   .catch((error) => console.log(error));
 
 // extract features and make list
-function extractFeList(card){
-    return card.features.reduce((previous,current)=>{
-        return previous+'<li>'+current+'</li>';
-    },'');
+function extractFeList(card) {
+  return card.features.reduce((previous, current) => {
+    return previous + "<li>" + current + "</li>";
+  }, "");
 }
+
+// show all data toggle
+function showAll() {
+  // fetch the whole list and display all Ai cards
+  fetch("https://openapi.programming-hero.com/api/ai/tools")
+    .then((res) => res.json())
+    .then((data) => displayAiCards(data, true))
+    .catch((error) => console.log(error));
+
+  //removing the button
+  showBtn = document.getElementById("show-all-sec");
+  showBtn.classList.add("d-none");
+}
+
 // display card data
-const displayAiCards = (data) => {
+const displayAiCards = (data, showAllTigger = false) => {
   const cardContainer = document.getElementById("card-container");
   // cardContainer.textContent = '';
 
   //display 6 cards
-//   cards = data.data.tools.slice(0, 6);
+  if (showAllTigger) {
     cards = data.data.tools;
+  } else {
+    cards = data.data.tools.slice(0, 6);
+  }
 
-  cards.forEach(card => {
+  cards.forEach((card) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("col");
     featureStr = extractFeList(card);
@@ -48,6 +66,6 @@ const displayAiCards = (data) => {
             </div>
         </div>
           `;
-    cardContainer.appendChild(cardDiv); 
+    cardContainer.appendChild(cardDiv);
   });
 };
