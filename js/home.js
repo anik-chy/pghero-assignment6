@@ -17,12 +17,12 @@ const displayAiCards = (data) => {
   cards = data.data.tools.slice(0, 6);
 
   cards.forEach(card => {
-    cl(card);
+    cl("anik");
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("col");
     cardDiv.innerHTML = `
         <div class="card h-100">
-            <img src="..." class="card-img-top">
+            <img src="${card.image}" class="card-img-top">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
