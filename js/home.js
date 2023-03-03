@@ -18,6 +18,9 @@ function extractFeList(card) {
 
 // show all data toggle
 function showAll() {
+  // start spinner or loader
+  toggleSpinner(true);
+
   // fetch the whole list and display all Ai cards
   fetch("https://openapi.programming-hero.com/api/ai/tools")
     .then((res) => res.json())
@@ -31,8 +34,12 @@ function showAll() {
 
 // display card data
 const displayAiCards = (data, showAllTigger = false) => {
+  // start spinner or loader
+  toggleSpinner(true);
+
+  //prepare the card container
   const cardContainer = document.getElementById("card-container");
-  // cardContainer.textContent = '';
+  cardContainer.textContent = "";
 
   //display 6 cards
   if (showAllTigger) {
@@ -68,4 +75,16 @@ const displayAiCards = (data, showAllTigger = false) => {
           `;
     cardContainer.appendChild(cardDiv);
   });
+  // stop spinner or loader
+  toggleSpinner(false);
+};
+
+// spinner function
+const toggleSpinner = (isLoading) => {
+  const loaderSection = document.getElementById("loader");
+  if (isLoading) {
+    loaderSection.classList.remove("d-none");
+  } else {
+    loaderSection.classList.add("d-none");
+  }
 };
