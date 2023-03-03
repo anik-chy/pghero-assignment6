@@ -64,7 +64,7 @@ function generateModal(data) {
 
     modalBody1.innerHTML = `
       <div class="card">
-          <div class="card-body bg-info">
+          <div class="card-body bg-info bg-gradient">
               <h5 class="card-title">${data.data.description}</h5>
               <div class="d-flex text-center justify-content-center">
                   <p class="btn-light p-3 m-2 text-primary rounded">${data.data.pricing ? data.data.pricing[0].price : 'Free of Cost'}<br>${data.data.pricing ? data.data.pricing[0].plan : 'Basic'}</p>
