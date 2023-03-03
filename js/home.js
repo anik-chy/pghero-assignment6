@@ -54,7 +54,7 @@ const displayAiCards = (data) => {
                     <small class="text-muted">${card.published_in}</small>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-light" onclick=""><i class="bi bi-arrow-right-circle"></i></button>    
+                    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="showModal(${card.id})"><i class="bi bi-arrow-right-circle"></i></button>    
                 
                 </div>
             </div>

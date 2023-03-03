@@ -1,5 +1,8 @@
 function showModal(id) {
-  urlStr = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  if (id < 10) {
+    id = "0" + id;
+  }
+  const urlStr = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
   fetch(urlStr)
     .then((res) => res.json())
     .then((data) => generateModal(data))
@@ -15,10 +18,23 @@ function generateModal(data) {
 
   modalBody1.innerHTML = `
     <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="card-body bg-info">
+            <h5 class="card-title">${data.data.description}</h5>
+            <div class="d-flex text-center justify-content-center">
+                <p class="btn-light p-3 m-2 rounded">10/month<br>Basic</p>
+                <p class="btn-light p-3 m-2 rounded">10/month<br>Basic</p>
+                <p class="btn-light p-3 m-2 rounded">10/month<br>Basic</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h5>Features</h5>
+                    <ul></ul>
+                </div>
+                <div>
+                    <h5>Integrations</h5>
+                    <ul></ul>
+                </div>
+            </div>
         </div>
     </div>
     `;
@@ -29,10 +45,10 @@ function generateModal(data) {
 
   modalBody2.innerHTML = `
       <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <img src="${data.data.image_link[0]}" class="card-img-top">
+          <div class="card-body text-center">
+              <h5 class="card-title">${data.data.input_output_examples[0].input}</h5>
+              <p class="card-text">${data.data.input_output_examples[0].output}</p>
           </div>
       </div>
       `;
