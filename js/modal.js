@@ -38,11 +38,23 @@ function extractModalFeList(data) {
   return featureString;
 }
 
+//generate the accuracy string to show or hide
+function generateAccuractyString(data){
+    
+    if(data.data.accuracy.score){
+        return '<div class="position-absolute top-0 end-0 m-2 p-1 rounded bg-danger text-light">'+data.data.accuracy.score*100+'% accuracy</div>'
+    }
+    else{
+        return '';
+    }
+            
+}
+
 function generateModal(data) {
   //preprocessed data
   const modalFeaturedList = extractModalFeList(data);
   const integrationsList = extractModalInList(data);
-
+  const accuracyStr = generateAccuractyString(data);
   
     const modalContainer = document.getElementById("modal-container");
     modalContainer.textContent = "";
@@ -80,7 +92,7 @@ function generateModal(data) {
     modalBody2.innerHTML = `
         <div class="card position-relative">
             <img src="${data.data.image_link[0]}" class="card-img-top h-50">
-            <div class="position-absolute top-0 end-0 m-2 p-1 bg-danger">hiHello</div>
+            ${accuracyStr}
             <div class="card-body text-center">
                 <h5 class="card-title">${data.data.input_output_examples ? data.data.input_output_examples[0].input : 'Can you give any example?'}</h5> 
                 <p class="card-text">${data.data.input_output_examples ? data.data.input_output_examples[0].output : "No! Not Yet! Take a break!!!"}</p>
@@ -89,6 +101,3 @@ function generateModal(data) {
         `;
     modalContainer.appendChild(modalBody2);
 }
-
-// 
-// 
