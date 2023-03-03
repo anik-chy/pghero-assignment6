@@ -3,6 +3,8 @@ function cl(anything) {
   console.log(anything);
 }
 
+showAllFlag = false;
+
 // fetch the whole list
 fetch("https://openapi.programming-hero.com/api/ai/tools")
   .then((res) => res.json())
@@ -21,10 +23,13 @@ function showAll() {
   // start spinner or loader
   toggleSpinner(true);
 
+  //set the flag
+  showAllFlag = true;
+
   // fetch the whole list and display all Ai cards
   fetch("https://openapi.programming-hero.com/api/ai/tools")
     .then((res) => res.json())
-    .then((data) => displayAiCards(data, true))
+    .then((data) => displayAiCards(data))
     .catch((error) => console.log(error));
 
   //removing the button
@@ -33,7 +38,7 @@ function showAll() {
 }
 
 // display card data
-const displayAiCards = (data, showAllTigger = false) => {
+const displayAiCards = (data) => {
   // start spinner or loader
   toggleSpinner(true);
 
@@ -42,7 +47,7 @@ const displayAiCards = (data, showAllTigger = false) => {
   cardContainer.textContent = "";
 
   //display 6 cards
-  if (showAllTigger) {
+  if (showAllFlag) {
     cards = data.data.tools;
   } else {
     cards = data.data.tools.slice(0, 6);
