@@ -27,16 +27,24 @@ const displayAiCards = (data) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("col");
     featureStr = extractFeList(card);
-    cl(featureStr);
+    //cl(featureStr);
     cardDiv.innerHTML = `
         <div class="card h-100">
-            <img src="${card.image}" class="card-img-top">
+            <img src="${card.image}" class="card-img-top h-50">
             <div class="card-body">
                 <h5 class="card-title">Features</h5>
                 <ol>${featureStr}</ol>
             </div>
-            <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+            <div class="card-footer d-flex justify-content-between align-items-center p-3">
+                <div>
+                    <h6 class="card-title">${card.name}</h6>
+                    <i class="bi bi-calendar-week"></i>
+                    <small class="text-muted">${card.published_in}</small>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-light" onclick=""><i class="bi bi-arrow-right-circle"></i></button>    
+                
+                </div>
             </div>
         </div>
           `;
